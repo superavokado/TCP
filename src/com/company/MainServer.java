@@ -20,12 +20,13 @@ public class MainServer {
                     sock = servsock.accept();
                     System.out.println("Accepted connection : " + sock);
                     // send file
-                    File myFile = new File("receivedFile.txt");
+                    File myFile = new File("file.txt");
                     byte[] mybytearray = new byte[(int) myFile.length()];
                     fis = new FileInputStream(myFile);
                     bis = new BufferedInputStream(fis);
                     bis.read(mybytearray, 0, mybytearray.length);
                     os = sock.getOutputStream();
+                    os.write(mybytearray);
                     System.out.println("Done.");
                 } finally {
                     if (bis != null) bis.close();

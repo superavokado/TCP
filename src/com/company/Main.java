@@ -21,16 +21,18 @@ public class Main {
             // receive file
             byte [] mybytearray  = new byte [100];
             InputStream is = sock.getInputStream();
-            fos = new FileOutputStream("file.txt");
+            fos = new FileOutputStream("TCPfile.txt");
             bos = new BufferedOutputStream(fos);
+            System.out.println("Reading");
             bytesRead = is.read(mybytearray,0,mybytearray.length);
             current = bytesRead;
-
+            System.out.println("Writing");
             do {
                 bytesRead =
                         is.read(mybytearray, current, (mybytearray.length-current));
-                if(bytesRead >= 0) current += bytesRead;
-            } while(bytesRead > -1);
+                if(bytesRead > 0) current += bytesRead;
+                System.out.println(bytesRead);
+            } while(bytesRead > 0);
             long b = System.nanoTime();
             bos.write(mybytearray, 0 , 100);
             bos.flush();

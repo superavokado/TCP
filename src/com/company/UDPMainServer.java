@@ -8,19 +8,15 @@ import java.net.DatagramSocket;
 
 public class UDPMainServer {
     public static void main(String args[]) throws IOException {
-        byte b[] = new byte[1024];
-        DatagramSocket dsoc = new DatagramSocket(9000);
-        FileWriter fileWriter = new FileWriter("receivedFile.txt");
+        byte b[] = new byte[100];
+        DatagramSocket dsock = new DatagramSocket(9000);
+        FileWriter fileWriter = new FileWriter("UDPfile.txt");
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        while (true) {
-            DatagramPacket dp = new DatagramPacket(b, b.length);
-            dsoc.receive(dp);
-            String str = new String(new String(dp.getData(), 0, dp.getLength()));
-            if (str.trim().equals("END"))
-                break;
-            bufferedWriter.write(str);
-            bufferedWriter.newLine();
-        }
+        DatagramPacket dp = new DatagramPacket(b, b.length);
+        dsock .receive(dp);
+        String str = new String(new String(dp.getData(), 0, dp.getLength()));
+        bufferedWriter.write(str);
+        bufferedWriter.newLine();
         bufferedWriter.close();
     }
 }
