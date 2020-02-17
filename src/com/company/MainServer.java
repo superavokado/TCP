@@ -9,7 +9,7 @@ public class MainServer {
     public static void tcp() throws IOException {
         FileInputStream fis = null;
         BufferedInputStream bis = null;
-        OutputStream os = null;
+        DataOutputStream os = null;
         ServerSocket servsock = null;
         Socket sock = null;
         try {
@@ -21,11 +21,12 @@ public class MainServer {
                     System.out.println("Accepted connection : " + sock);
                     // send file
                     File myFile = new File("file.txt");
-                    byte[] mybytearray = new byte[(int) myFile.length()];
+                    byte[] mybytearray = new byte[(int)myFile.length()];
                     fis = new FileInputStream(myFile);
                     bis = new BufferedInputStream(fis);
                     bis.read(mybytearray, 0, mybytearray.length);
-                    os = sock.getOutputStream();
+                    os = new DataOutputStream(sock.getOutputStream());
+                    os.writeInt((int)myFile.length());
                     os.write(mybytearray);
                     System.out.println("Done.");
                 } finally {
